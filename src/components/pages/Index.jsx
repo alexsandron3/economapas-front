@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import isLoggedin from '../../helpers/isLoggedin';
+import Content from '../partials/Content';
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -9,7 +10,7 @@ class Index extends Component {
   render() {
     if (!isLoggedin()) return <Redirect push to="/" />;
 
-    return 1;
+    return <Content cardTitle={'Painel'}></Content>;
   }
 }
 

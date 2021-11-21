@@ -5,6 +5,7 @@ import Login from './components/pages/Login';
 import Index from './components/pages/Index';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Appbar from './components/partials/Appbar';
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class App extends Component {
   render() {
     return (
       <>
+        <Appbar />
         <Switch>
           <Route path="/index" component={Index} />
           <Route path="/" component={Login} />
