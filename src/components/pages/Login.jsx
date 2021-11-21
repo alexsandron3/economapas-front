@@ -7,7 +7,10 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { connect } from 'react-redux';
+import { newLogin } from '../../actions';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Login extends Component {
   constructor(props) {
@@ -18,10 +21,23 @@ class Login extends Component {
     };
   }
 
+  // componentDidMount() {
+  //   const { dispatchLogin } = this.props;
+  //   console.log(this.state);
+  //   dispatchLogin(this.state);
+  // }
+
   handleChange = ({ target }) => {
     this.setState({
       [target.name]: target.value,
     });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { dispatchLogin } = this.props;
+    console.log(this.state);
+    dispatchLogin(this.state);
   };
 
   render() {
@@ -45,7 +61,7 @@ class Login extends Component {
           </Typography>
           <Box
             component="form"
-            // onSubmit={handleSubmit}
+            onSubmit={this.handleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -81,12 +97,16 @@ class Login extends Component {
             >
               Logar-se
             </Button>
+            <ToastContainer />
           </Box>
         </Box>
-        <ToastContainer />
       </Container>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchLogin: (values) => dispatch(newLogin(values)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
