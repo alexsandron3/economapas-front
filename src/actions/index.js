@@ -15,10 +15,17 @@ export const newLogin = (payload) => async (dispatch) => {
       toast.success(message, {
         pauseOnFocusLoss: false,
       });
+      localStorage.setItem(
+        'userInfo',
+        JSON.stringify({ username: payload.username, isLoggedin: true }),
+      );
+      dispatch(userLogin(payload.username));
     } else {
       toast.error(message, {
         pauseOnFocusLoss: false,
       });
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };

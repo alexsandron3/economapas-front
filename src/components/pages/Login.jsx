@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux';
 import { newLogin } from '../../actions';
 import 'react-toastify/dist/ReactToastify.css';
+import { Redirect } from 'react-router';
 
 class Login extends Component {
   constructor(props) {
@@ -20,12 +21,9 @@ class Login extends Component {
       password: '',
     };
   }
-
-  // componentDidMount() {
-  //   const { dispatchLogin } = this.props;
-  //   console.log(this.state);
-  //   dispatchLogin(this.state);
-  // }
+  componentDidMount() {
+    this.checkIfUserIsLoggedin();
+  }
 
   handleChange = ({ target }) => {
     this.setState({
@@ -36,12 +34,18 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { dispatchLogin } = this.props;
-    console.log(this.state);
     dispatchLogin(this.state);
+  };
+
+  checkIfUserIsLoggedin = () => {
+    const storage = JSON.parse(localStorage.getItem('userInfo'));
+    return storage.isLoggedin;
   };
 
   render() {
     const { username, password } = this.state;
+    const { userReducer } = this.props;
+    if (this.checkIfUserIsLoggedin) return <Redirect push to="/index" />;
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -97,7 +101,7 @@ class Login extends Component {
             >
               Logar-se
             </Button>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
           </Box>
         </Box>
       </Container>
@@ -105,8 +109,10 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({ ...state });
+
 const mapDispatchToProps = (dispatch) => ({
   dispatchLogin: (values) => dispatch(newLogin(values)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
