@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { newLogin } from '../../actions';
 import 'react-toastify/dist/ReactToastify.css';
 import { Redirect } from 'react-router';
+import isLoggedin from '../../helpers/isLoggedin';
 
 class Login extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class Login extends Component {
     };
   }
   componentDidMount() {
-    this.checkIfUserIsLoggedin();
+    console.log(this.props);
   }
 
   handleChange = ({ target }) => {
@@ -37,15 +38,11 @@ class Login extends Component {
     dispatchLogin(this.state);
   };
 
-  checkIfUserIsLoggedin = () => {
-    const storage = JSON.parse(localStorage.getItem('userInfo'));
-    return storage.isLoggedin;
-  };
-
   render() {
     const { username, password } = this.state;
     const { userReducer } = this.props;
-    if (this.checkIfUserIsLoggedin) return <Redirect push to="/index" />;
+    // if (!isLoggedin()) return <Redirect push to="/" />;
+    if (isLoggedin()) return <Redirect push to="/index" />;
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
