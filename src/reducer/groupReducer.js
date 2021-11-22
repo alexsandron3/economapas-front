@@ -12,7 +12,7 @@ const groupReducer = (state = INITIAL_STATE, action) => {
   const { payload } = action;
   switch (action.type) {
     case EDIT_GROUP:
-      return { ...state, payload };
+      return { ...state };
     case NEW_GROUP:
       return { ...state };
     case REFRESH_GROUP_LIST:

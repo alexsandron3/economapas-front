@@ -14,6 +14,7 @@ import {
 import { connect } from 'react-redux';
 import addGroupReq from '../../services/newGroup';
 import { fetchGroupList, newGroup } from '../../actions';
+import { toast } from 'react-toastify';
 class DialogNewGroup extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +45,6 @@ class DialogNewGroup extends Component {
     const storage = JSON.parse(localStorage.getItem('userInfo'));
     const userId = storage.userId;
     const { dispatchNewGroup, dispatchRefreshGroupList } = this.props;
-    console.log(this.props.groupReducer);
 
     dispatchNewGroup({ groupName, selectedCities, userId });
     this.setState({ groupName: '', open: false, selectedCities: [] }, () =>

@@ -12,25 +12,30 @@ import {
   DialogTitle,
 } from '@mui/material';
 import { connect } from 'react-redux';
+import { editGroup, fetchGroupList } from '../../actions';
 class DialogEditGroup extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 0,
       groupName: '',
       selectedCities: [],
     };
   }
   componentDidMount() {
-    // const { showEdit } = this.props;
     this.setSelectedCities();
   }
 
   setSelectedCities = () => {
     const {
-      group: { groupName, selectedCities },
+      group: { groupName, selectedCities, id },
       group,
     } = this.props;
-    this.setState({ groupName, selectedCities: JSON.parse(selectedCities) });
+    this.setState({
+      groupName,
+      selectedCities: JSON.parse(selectedCities),
+      id,
+    });
   };
 
   handleCities = ({ target }, selecteds, c) => {
@@ -41,6 +46,13 @@ class DialogEditGroup extends Component {
   };
 
   handleChange = ({ target }) => this.setState({ [target.name]: target.value });
+
+  handleEdit = () => {
+    const { dispatchUpdateGroup, dispatchRefreshGroupList } = this.props;
+    dispatchUpdateGroup(this.state);
+    dispatchRefreshGroupList();
+  };
+
   render() {
     const { groupName, selectedCities } = this.state;
     const { showEdit, handleClickClose } = this.props;
@@ -91,7 +103,7 @@ class DialogEditGroup extends Component {
 
             <DialogActions>
               <Button onClick={handleClickClose}>Cancelar</Button>
-              <Button onClick={handleClickClose}>Salvar</Button>
+              <Button onClick={this.handleEdit}>Salvar</Button>
             </DialogActions>
           </DialogContent>
         </Dialog>
@@ -102,4 +114,8 @@ class DialogEditGroup extends Component {
 
 const mapStateToProps = (state) => ({ ...state });
 
-export default connect(mapStateToProps)(DialogEditGroup);
+const mapDispatchToProps = (dispatch) => ({
+  dispatchUpdateGroup: (values) => dispatch(editGroup(values)),
+  dispatchRefreshGroupList: () => dispatch(fetchGroupList()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(DialogEditGroup);
