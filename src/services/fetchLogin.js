@@ -7,6 +7,5 @@ export const fetchLogin = async ({ username, password }) => {
     url: API_URL,
     data: { username, password },
   });
-
   return { data };
 };

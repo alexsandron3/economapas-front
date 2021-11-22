@@ -20,6 +20,9 @@ class GroupListItem extends Component {
 
   handleClickOpen = () => {
     this.setState({ showEdit: true });
+    const { group, index } = this.props;
+
+    // console.log(group);
   };
 
   handleClickClose = () => {
@@ -57,6 +60,7 @@ class GroupListItem extends Component {
           <DialogEditGroup
             index={index}
             showEdit={showEdit}
+            group={group}
             handleClickOpen
             handleClickClose={this.handleClickClose}
           />

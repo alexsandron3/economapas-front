@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { connect } from 'react-redux';
 import addGroupReq from '../../services/newGroup';
-import { newGroup, resetStatus } from '../../actions';
+import { fetchGroupList, newGroup } from '../../actions';
 class DialogNewGroup extends Component {
   constructor(props) {
     super(props);
@@ -43,11 +43,13 @@ class DialogNewGroup extends Component {
     const { groupName, selectedCities } = this.state;
     const storage = JSON.parse(localStorage.getItem('userInfo'));
     const userId = storage.userId;
-    const { dispatchNewGroup } = this.props;
+    const { dispatchNewGroup, dispatchRefreshGroupList } = this.props;
     console.log(this.props.groupReducer);
 
     dispatchNewGroup({ groupName, selectedCities, userId });
-    this.setState({ groupName: '', open: false, selectedCities: [] });
+    this.setState({ groupName: '', open: false, selectedCities: [] }, () =>
+      dispatchRefreshGroupList(),
+    );
   };
 
   handleChange = ({ target }) => this.setState({ [target.name]: target.value });
@@ -112,7 +114,7 @@ const mapStateToProps = (state) => ({ ...state });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchNewGroup: (values) => dispatch(newGroup(values)),
-  dispatchResetStatus: () => dispatch(resetStatus()),
+  dispatchRefreshGroupList: () => dispatch(fetchGroupList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogNewGroup);

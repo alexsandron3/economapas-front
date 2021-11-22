@@ -1,11 +1,11 @@
-import { NEW_GROUP, EDIT_GROUP, RESET_STATUS } from '../actions/actions-types';
+import {
+  NEW_GROUP,
+  EDIT_GROUP,
+  REFRESH_GROUP_LIST,
+} from '../actions/actions-types';
 
 const INITIAL_STATE = {
-  success: false,
-  groupList: [
-    { groupName: 'Grupo 1', selectedCities: ['Manaus - AM', 'Macapá - AP'] },
-    { groupName: 'Grupo 2', selectedCities: ['Manaus - AM', 'Macapá - AP'] },
-  ],
+  groupList: [],
 };
 
 const groupReducer = (state = INITIAL_STATE, action) => {
@@ -14,9 +14,9 @@ const groupReducer = (state = INITIAL_STATE, action) => {
     case EDIT_GROUP:
       return { ...state, payload };
     case NEW_GROUP:
-      return { ...state, success: true };
-    case RESET_STATUS:
-      return { ...state, success: false };
+      return { ...state };
+    case REFRESH_GROUP_LIST:
+      return { ...state, groupList: payload };
     default:
       return state;
   }

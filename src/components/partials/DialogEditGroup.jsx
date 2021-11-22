@@ -21,14 +21,16 @@ class DialogEditGroup extends Component {
     };
   }
   componentDidMount() {
-    const { showEdit } = this.props;
-    showEdit && this.setSelectedCities();
+    // const { showEdit } = this.props;
+    this.setSelectedCities();
   }
 
   setSelectedCities = () => {
-    const { groupReducer, index } = this.props;
-    console.log(groupReducer);
-    this.setState({ ...groupReducer.groupList[index] });
+    const {
+      group: { groupName, selectedCities },
+      group,
+    } = this.props;
+    this.setState({ groupName, selectedCities: JSON.parse(selectedCities) });
   };
 
   handleCities = ({ target }, selecteds, c) => {
@@ -72,7 +74,7 @@ class DialogEditGroup extends Component {
               options={cities}
               disableCloseOnSelect
               getOptionLabel={(option) => option}
-              renderOption={(props, option, { selected }) => (
+              renderOption={(props, option, event) => (
                 <li {...props}>{option}</li>
               )}
               renderInput={(params) => {
@@ -88,8 +90,8 @@ class DialogEditGroup extends Component {
             />
 
             <DialogActions>
-              <Button onClick={this.handleClickClose}>Cancelar</Button>
-              <Button onClick={this.handleClickClose}>Salvar</Button>
+              <Button onClick={handleClickClose}>Cancelar</Button>
+              <Button onClick={handleClickClose}>Salvar</Button>
             </DialogActions>
           </DialogContent>
         </Dialog>

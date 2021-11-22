@@ -8,8 +8,18 @@ import GroupListItem from '../partials/GroupListItem';
 import DialogNewGroup from '../partials/DialogNewGroup';
 import { connect } from 'react-redux';
 import { nanoid } from 'nanoid';
+import { fetchGroupList } from '../../actions';
 
 class Index extends Component {
+  componentDidMount() {
+    this.fetchGroups();
+  }
+
+  fetchGroups = () => {
+    const { dispatchRefreshGroupList, groupReducer } = this.props;
+    dispatchRefreshGroupList();
+  };
+
   render() {
     const {
       groupReducer: { groupList },
@@ -37,7 +47,9 @@ class Index extends Component {
     );
   }
 }
-
 const mapStateToProps = (state) => ({ ...state });
+const mapDispatchToProps = (dispatch) => ({
+  dispatchRefreshGroupList: () => dispatch(fetchGroupList()),
+});
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
