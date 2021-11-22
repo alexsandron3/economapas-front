@@ -11,6 +11,9 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material';
+import { connect } from 'react-redux';
+import addGroupReq from '../../services/newGroup';
+import { newGroup, resetStatus } from '../../actions';
 class DialogNewGroup extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +37,17 @@ class DialogNewGroup extends Component {
 
     if (selectedCities.length === 5 && target.ariaSelected) return 0;
     this.setState({ selectedCities: selecteds });
+  };
+
+  handleSend = () => {
+    const { groupName, selectedCities } = this.state;
+    const storage = JSON.parse(localStorage.getItem('userInfo'));
+    const userId = storage.userId;
+    const { dispatchNewGroup } = this.props;
+    console.log(this.props.groupReducer);
+
+    dispatchNewGroup({ groupName, selectedCities, userId });
+    this.setState({ groupName: '', open: false, selectedCities: [] });
   };
 
   handleChange = ({ target }) => this.setState({ [target.name]: target.value });
@@ -85,7 +99,7 @@ class DialogNewGroup extends Component {
 
             <DialogActions>
               <Button onClick={this.handleClickClose}>Cancelar</Button>
-              <Button onClick={this.handleClickClose}>Salvar</Button>
+              <Button onClick={this.handleSend}>Salvar</Button>
             </DialogActions>
           </DialogContent>
         </Dialog>
@@ -94,4 +108,11 @@ class DialogNewGroup extends Component {
   }
 }
 
-export default DialogNewGroup;
+const mapStateToProps = (state) => ({ ...state });
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchNewGroup: (values) => dispatch(newGroup(values)),
+  dispatchResetStatus: () => dispatch(resetStatus()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DialogNewGroup);
