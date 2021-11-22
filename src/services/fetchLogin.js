@@ -1,6 +1,5 @@
 import axios from 'axios';
-const API_URL =
-  'http://localhost/desafios/economapas/economapas-API/api/user.php';
+const API_URL = 'http://api-economapas.herokuapp.com/api/user.php';
 export const fetchLogin = async ({ username, password }) => {
   const { data } = await axios({
     method: 'POST',

@@ -16,7 +16,7 @@ class Index extends Component {
   }
 
   fetchGroups = () => {
-    const { dispatchRefreshGroupList, groupReducer } = this.props;
+    const { dispatchRefreshGroupList } = this.props;
     dispatchRefreshGroupList();
   };
 

@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_URL =
-  'http://localhost/desafios/economapas/economapas-API/api/group.php';
+const API_URL = 'http://api-economapas.herokuapp.com/api/group.php';
 
 const editGroupReq = async (groupInfo) => {
   const { data } = await axios({
@@ -13,3 +12,4 @@ const editGroupReq = async (groupInfo) => {
 };
 
 export default editGroupReq;
+// http://api-economapas.herokuapp.com/api/group.php

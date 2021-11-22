@@ -52,7 +52,9 @@ class GroupListItem extends Component {
             </ListItemAvatar>
             <ListItemText
               primary={`${group.groupName}`}
-              secondary={`Quantidade de cidades selecionadas: ${group.selectedCities.length}`}
+              secondary={`Quantidade de cidades selecionadas: ${
+                JSON.parse(group.selectedCities).length
+              }`}
             />
           </ListItem>
         </List>
