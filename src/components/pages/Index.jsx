@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import isLoggedin from '../../helpers/isLoggedin';
 import Content from '../partials/Content';
-import { Box, Typography } from '@mui/material';
+import { Alert, Box, Typography } from '@mui/material';
 
 import GroupListItem from '../partials/GroupListItem';
 import DialogNewGroup from '../partials/DialogNewGroup';
@@ -23,15 +23,20 @@ class Index extends Component {
             Lista de grupos
           </Typography>
         </Box>
-        {groupList.map((group, index) => (
-          <GroupListItem key={nanoid()} index={index} group={group} />
-        ))}
+        {groupList.length ? (
+          groupList.map((group, index) => (
+            <GroupListItem key={nanoid()} index={index} group={group} />
+          ))
+        ) : (
+          <Box ml={3} mt={3}>
+            <Alert severity="info">Nenhum grupo criado!</Alert>
+          </Box>
+        )}
         <DialogNewGroup />
       </Content>
     );
   }
 }
-// groupReducer.groupList[groupReducer.groupIndex]
 
 const mapStateToProps = (state) => ({ ...state });
 

@@ -26,8 +26,8 @@ class GroupListItem extends Component {
     this.setState({ showEdit: false });
   };
   render() {
-    const { group, index, showEdit } = this.props;
-    console.log(this.props.group);
+    const { group, index } = this.props;
+    const { showEdit } = this.state;
     return (
       <>
         <List>
@@ -56,7 +56,7 @@ class GroupListItem extends Component {
         {this.state.showEdit && (
           <DialogEditGroup
             index={index}
-            showEdit={true}
+            showEdit={showEdit}
             handleClickOpen
             handleClickClose={this.handleClickClose}
           />
