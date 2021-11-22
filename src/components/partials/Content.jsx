@@ -11,6 +11,7 @@ export default class Content extends Component {
               <Typography variant="h4" mt={1} textAlign="center" p={1}>
                 {cardTitle}
               </Typography>
+              {children}
             </CardContent>
           </Card>
         </Grid>

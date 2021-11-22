@@ -6,6 +6,8 @@ import Index from './components/pages/Index';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Appbar from './components/partials/Appbar';
+import { makeStyles, ThemeProvider } from '@mui/styles';
+const theme = makeStyles();
 
 class App extends Component {
   constructor(props) {
@@ -16,12 +18,14 @@ class App extends Component {
   render() {
     return (
       <>
-        <Appbar />
-        <Switch>
-          <Route path="/index" component={Index} />
-          <Route path="/" component={Login} />
-        </Switch>
-        <ToastContainer />
+        <ThemeProvider theme={theme}>
+          <Appbar />
+          <Switch>
+            <Route path="/index" component={Index} />
+            <Route path="/" component={Login} />
+          </Switch>
+          <ToastContainer />
+        </ThemeProvider>
       </>
     );
   }
