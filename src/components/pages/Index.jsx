@@ -5,28 +5,23 @@ import Content from '../partials/Content';
 import Button from '@mui/material/Button';
 import {
   Dialog,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  InputLabel,
-  FormControl,
   TextField,
   Autocomplete,
-  Checkbox,
+  Box,
+  DialogContentText,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
 } from '@mui/material';
 
-import CloseIcon from '@mui/icons-material/Close';
 import { cities } from '../../helpers/ufList';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: true,
+      open: false,
       selectedCities: [],
     };
   }
@@ -52,30 +47,19 @@ class Index extends Component {
 
     return (
       <Content cardTitle={'Painel'}>
-        <Button variant="outlined" onClick={this.handleClickOpen}>
-          Criar novo grupo
-        </Button>
-        <Dialog fullScreen open={open} onClose={this.handleClickClose}>
-          <AppBar sx={{ position: 'relative' }}>
-            <Toolbar>
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={this.handleClickClose}
-                aria-label="close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                Novo grupo
-              </Typography>
-              <Button autoFocus color="inherit">
-                Salvar
-              </Button>
-            </Toolbar>
-          </AppBar>
+        <Box mt={6} ml={3}>
+          <Button variant="outlined" onClick={this.handleClickOpen}>
+            Criar novo grupo
+          </Button>
+        </Box>
+        <Dialog open={open} onClose={this.handleClickClose}>
+          <DialogContent>
+            <DialogTitle>Novo grupo</DialogTitle>
 
-          <FormControl sx={{ m: 2 }}>
+            <DialogContentText>
+              Selecione até 5 cidades para adicionar ao seu grupo.
+            </DialogContentText>
+
             <Autocomplete
               multiple
               value={selectedCities}
@@ -83,17 +67,22 @@ class Index extends Component {
               options={cities}
               disableCloseOnSelect
               getOptionLabel={(option) => option}
-              renderOption={(props, option, { selected }) => {
-                console.log(props);
-                return <li {...props}>{option}</li>;
-              }}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>{option}</li>
+              )}
               renderInput={(params) => (
                 <TextField {...params} label="Cidades" placeholder="Cidades" />
               )}
               onChange={(a, selecteds, c) => this.handleCities(a, selecteds, c)}
             />
-          </FormControl>
+            <DialogActions>
+              <Button onClick={this.handleClickClose}>Cancelar</Button>
+              <Button onClick={this.handleClickClose}>Salvar</Button>
+            </DialogActions>
+          </DialogContent>
         </Dialog>
+
+        <Typography variant="h1" color="initial"></Typography>
       </Content>
     );
   }

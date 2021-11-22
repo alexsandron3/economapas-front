@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux';
 import { newLogin } from '../../actions';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,9 +20,6 @@ class Login extends Component {
       username: '',
       password: '',
     };
-  }
-  componentDidMount() {
-    console.log(this.props);
   }
 
   handleChange = ({ target }) => {
@@ -40,7 +36,6 @@ class Login extends Component {
 
   render() {
     const { username, password } = this.state;
-    const { userReducer } = this.props;
     // if (!isLoggedin()) return <Redirect push to="/" />;
     if (isLoggedin()) return <Redirect push to="/index" />;
     return (
