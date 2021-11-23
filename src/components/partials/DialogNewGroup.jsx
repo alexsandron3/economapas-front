@@ -12,9 +12,7 @@ import {
   DialogTitle,
 } from '@mui/material';
 import { connect } from 'react-redux';
-import addGroupReq from '../../services/newGroup';
 import { fetchGroupList, newGroup } from '../../actions';
-import { toast } from 'react-toastify';
 class DialogNewGroup extends Component {
   constructor(props) {
     super(props);
@@ -44,12 +42,10 @@ class DialogNewGroup extends Component {
     const { groupName, selectedCities } = this.state;
     const storage = JSON.parse(localStorage.getItem('userInfo'));
     const userId = storage.userId;
-    const { dispatchNewGroup, dispatchRefreshGroupList } = this.props;
+    const { dispatchNewGroup } = this.props;
 
     dispatchNewGroup({ groupName, selectedCities, userId });
-    this.setState({ groupName: '', open: false, selectedCities: [] }, () =>
-      dispatchRefreshGroupList(),
-    );
+    this.setState({ groupName: '', open: false, selectedCities: [] });
   };
 
   handleChange = ({ target }) => this.setState({ [target.name]: target.value });
@@ -114,7 +110,6 @@ const mapStateToProps = (state) => ({ ...state });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchNewGroup: (values) => dispatch(newGroup(values)),
-  dispatchRefreshGroupList: () => dispatch(fetchGroupList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogNewGroup);

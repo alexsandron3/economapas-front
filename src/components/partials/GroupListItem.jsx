@@ -6,43 +6,52 @@ import Avatar from '@mui/material/Avatar';
 import FolderIcon from '@mui/icons-material/Folder';
 import ListItemText from '@mui/material/ListItemText';
 import EditIcon from '@mui/icons-material/Edit';
-import DialogNewGroup from './DialogNewGroup';
 import DialogEditGroup from './DialogEditGroup';
+import DialogConfirmation from './DialogConfirmation';
 class GroupListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showEdit: false,
+      showDelete: false,
       groupName: '',
       selectedCities: [],
     };
   }
 
-  handleClickOpen = () => {
-    this.setState({ showEdit: true });
-    const { group, index } = this.props;
-
-    // console.log(group);
+  handleOpenEdit = (state) => {
+    // console.log(mode);
+    this.setState({ [state]: true });
   };
 
-  handleClickClose = () => {
-    this.setState({ showEdit: false });
+  handleCloseEdit = (state) => {
+    this.setState({ [state]: false });
   };
   render() {
     const { group, index } = this.props;
-    const { showEdit } = this.state;
+    const { showEdit, showDelete } = this.state;
     return (
       <>
         <List>
           <ListItem
             secondaryAction={
-              <IconButton
-                edge="end"
-                aria-label="edit"
-                onClick={this.handleClickOpen}
-              >
-                <EditIcon />
-              </IconButton>
+              <>
+                <IconButton
+                  edge="end"
+                  aria-label="edit"
+                  onClick={() => this.handleOpenEdit('showEdit')}
+                  name="edit"
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => this.handleOpenEdit('showDelete')}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </>
             }
           >
             <ListItemAvatar>
@@ -58,13 +67,20 @@ class GroupListItem extends Component {
             />
           </ListItem>
         </List>
-        {this.state.showEdit && (
+        {showEdit && (
           <DialogEditGroup
             index={index}
             showEdit={showEdit}
             group={group}
-            handleClickOpen
-            handleClickClose={this.handleClickClose}
+            handleOpenEdit
+            handleCloseEdit={this.handleCloseEdit}
+          />
+        )}
+        {showDelete && (
+          <DialogConfirmation
+            showDelete={showDelete}
+            handleCloseEdit={this.handleCloseEdit}
+            group={group}
           />
         )}
       </>

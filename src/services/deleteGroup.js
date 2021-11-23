@@ -2,15 +2,13 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost/desafios/economapas/API/api/group.php';
 
-const editGroupReq = async (groupInfo) => {
+const deleteGroupReq = async (id) => {
   const { data } = await axios({
-    method: 'UPDATE',
+    method: 'DELETE',
     url: API_URL,
-    data: groupInfo,
+    data: id,
   });
   return { data };
 };
 
-export default editGroupReq;
-
-// https://api-economapas.herokuapp.com/api
+export default deleteGroupReq;

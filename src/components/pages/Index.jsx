@@ -22,9 +22,10 @@ class Index extends Component {
 
   render() {
     const {
-      groupReducer: { groupList },
+      groupReducer: { groupList, refresh },
     } = this.props;
     if (!isLoggedin()) return <Redirect push to="/" />;
+    if (refresh === true) this.fetchGroups();
 
     return (
       <Content cardTitle={'Painel'}>

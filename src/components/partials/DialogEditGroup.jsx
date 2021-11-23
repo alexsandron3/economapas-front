@@ -29,7 +29,6 @@ class DialogEditGroup extends Component {
   setSelectedCities = () => {
     const {
       group: { groupName, selectedCities, id },
-      group,
     } = this.props;
     this.setState({
       groupName,
@@ -48,17 +47,19 @@ class DialogEditGroup extends Component {
   handleChange = ({ target }) => this.setState({ [target.name]: target.value });
 
   handleEdit = () => {
-    const { dispatchUpdateGroup, dispatchRefreshGroupList } = this.props;
+    const { dispatchUpdateGroup } = this.props;
     dispatchUpdateGroup(this.state);
-    dispatchRefreshGroupList();
   };
 
   render() {
     const { groupName, selectedCities } = this.state;
-    const { showEdit, handleClickClose } = this.props;
+    const { showEdit, handleCloseEdit } = this.props;
     return (
       <>
-        <Dialog open={showEdit || false} onClose={() => handleClickClose()}>
+        <Dialog
+          open={showEdit || false}
+          onClose={() => handleCloseEdit('showEdit')}
+        >
           <DialogContent>
             <DialogTitle>Editar grupo </DialogTitle>
 
@@ -102,7 +103,9 @@ class DialogEditGroup extends Component {
             />
 
             <DialogActions>
-              <Button onClick={handleClickClose}>Cancelar</Button>
+              <Button onClick={() => handleCloseEdit('showEdit')}>
+                Cancelar
+              </Button>
               <Button onClick={this.handleEdit}>Salvar</Button>
             </DialogActions>
           </DialogContent>
@@ -116,6 +119,5 @@ const mapStateToProps = (state) => ({ ...state });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchUpdateGroup: (values) => dispatch(editGroup(values)),
-  dispatchRefreshGroupList: () => dispatch(fetchGroupList()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(DialogEditGroup);

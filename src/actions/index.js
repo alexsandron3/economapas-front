@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import deleteGroupReq from '../services/deleteGroup';
 import editGroupReq from '../services/editGroup';
 import { fetchGroups } from '../services/fetchGroups';
 import { fetchLogin } from '../services/fetchLogin';
@@ -8,6 +9,7 @@ import {
   REFRESH_GROUP_LIST,
   USER_LOGIN,
   EDIT_GROUP,
+  DELETE_GROUP,
 } from './actions-types';
 
 export const userLogin = (payload) => ({
@@ -20,7 +22,15 @@ export const addGroup = (payload) => ({
   payload,
 });
 
-export const updateGroup = (payload) => ({ type: EDIT_GROUP, payload });
+export const updateGroup = (payload) => ({
+  type: EDIT_GROUP,
+  payload,
+});
+
+export const deleteGroup = (payload) => ({
+  type: DELETE_GROUP,
+  payload,
+});
 
 export const refreshGroupList = (payload) => ({
   type: REFRESH_GROUP_LIST,
@@ -82,18 +92,13 @@ export const fetchGroupList = (payload) => async (dispatch) => {
       data: { success, message, grupos },
     } = await fetchGroups();
 
-    setTimeout(() => {
-      if (success === 1) {
-        toast.success(message, {
-          pauseOnFocusLoss: false,
-        });
-        dispatch(refreshGroupList(grupos));
-      } else {
-        toast.error(message, {
-          pauseOnFocusLoss: false,
-        });
-      }
-    }, 400);
+    if (success === 1) {
+      dispatch(refreshGroupList(grupos));
+    } else {
+      toast.error(message, {
+        pauseOnFocusLoss: false,
+      });
+    }
   } catch (error) {
     console.error(error);
   }
@@ -120,4 +125,26 @@ export const editGroup = (payload) => async (dispatch) => {
   }
 };
 
+export const removeGroup = (payload) => async (dispatch) => {
+  try {
+    const {
+      data: { success, message },
+      data,
+    } = await deleteGroupReq(payload);
+
+    console.log(data);
+    if (success === 1) {
+      toast.success(message, {
+        pauseOnFocusLoss: false,
+      });
+      dispatch(deleteGroup());
+    } else {
+      toast.error(message, {
+        pauseOnFocusLoss: false,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 export default newGroup;
