@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { connect } from 'react-redux';
 import { fetchGroupList, newGroup } from '../../actions';
+import { toast } from 'react-toastify';
 class DialogNewGroup extends Component {
   constructor(props) {
     super(props);
@@ -40,12 +41,18 @@ class DialogNewGroup extends Component {
 
   handleSend = () => {
     const { groupName, selectedCities } = this.state;
-    const storage = JSON.parse(localStorage.getItem('userInfo'));
-    const userId = storage.userId;
-    const { dispatchNewGroup } = this.props;
+    if (groupName.length) {
+      const storage = JSON.parse(localStorage.getItem('userInfo'));
+      const userId = storage.userId;
+      const { dispatchNewGroup } = this.props;
 
-    dispatchNewGroup({ groupName, selectedCities, userId });
-    this.setState({ groupName: '', open: false, selectedCities: [] });
+      dispatchNewGroup({ groupName, selectedCities, userId });
+      this.setState({ groupName: '', open: false, selectedCities: [] });
+    } else {
+      toast.error('Por favor, insira um nome para o grupo!', {
+        pauseOnFocusLoss: false,
+      });
+    }
   };
 
   handleChange = ({ target }) => this.setState({ [target.name]: target.value });

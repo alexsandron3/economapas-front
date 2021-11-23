@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { connect } from 'react-redux';
 import { editGroup, fetchGroupList } from '../../actions';
+import { toast } from 'react-toastify';
 class DialogEditGroup extends Component {
   constructor(props) {
     super(props);
@@ -48,7 +49,14 @@ class DialogEditGroup extends Component {
 
   handleEdit = () => {
     const { dispatchUpdateGroup } = this.props;
-    dispatchUpdateGroup(this.state);
+    const { groupName } = this.state;
+    if (groupName.length) {
+      dispatchUpdateGroup(this.state);
+    } else {
+      toast.error('Por favor, insira um nome para o grupo!', {
+        pauseOnFocusLoss: false,
+      });
+    }
   };
 
   render() {

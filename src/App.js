@@ -19,7 +19,6 @@ class App extends Component {
     const {
       userReducer: { isLoggedin },
     } = this.props;
-    console.log(isLoggedin);
     return (
       <>
         {isLoggedin && <Appbar />}
