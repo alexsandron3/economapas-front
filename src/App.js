@@ -6,7 +6,8 @@ import Index from './components/pages/Index';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Appbar from './components/partials/Appbar';
-import isLoggedin from './helpers/isLoggedin';
+import { connect } from 'react-redux';
+import isLogged from './helpers/isLoggedin';
 
 class App extends Component {
   constructor(props) {
@@ -15,9 +16,14 @@ class App extends Component {
   }
 
   render() {
+    const {
+      userReducer: { isLoggedin },
+    } = this.props;
+    console.log(isLoggedin);
     return (
       <>
-        {isLoggedin() && <Appbar />}
+        {isLoggedin && <Appbar />}
+        {isLogged() && <Appbar />}
 
         <Switch>
           <Route path="/index" component={Index} />
@@ -29,4 +35,6 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({ ...state });
+
+export default connect(mapStateToProps)(App);
