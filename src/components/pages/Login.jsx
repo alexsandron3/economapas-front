@@ -36,7 +36,6 @@ class Login extends Component {
 
   render() {
     const { username, password } = this.state;
-    // if (!isLoggedin()) return <Redirect push to="/" />;
     if (isLoggedin()) return <Redirect push to="/index" />;
     return (
       <Container component="main" maxWidth="xs">

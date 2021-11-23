@@ -50,8 +50,10 @@ class DialogEditGroup extends Component {
   handleEdit = () => {
     const { dispatchUpdateGroup } = this.props;
     const { groupName } = this.state;
+    const { userId } = JSON.parse(localStorage.getItem('userInfo'));
+
     if (groupName.length) {
-      dispatchUpdateGroup(this.state);
+      dispatchUpdateGroup({ ...this.state, userId });
     } else {
       toast.error('Por favor, insira um nome para o grupo!', {
         pauseOnFocusLoss: false,

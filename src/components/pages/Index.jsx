@@ -17,7 +17,8 @@ class Index extends Component {
 
   fetchGroups = () => {
     const { dispatchRefreshGroupList } = this.props;
-    dispatchRefreshGroupList();
+    const { userId } = JSON.parse(localStorage.getItem('userInfo'));
+    dispatchRefreshGroupList({ userId });
   };
 
   render() {
@@ -54,7 +55,7 @@ class Index extends Component {
 }
 const mapStateToProps = (state) => ({ ...state });
 const mapDispatchToProps = (dispatch) => ({
-  dispatchRefreshGroupList: () => dispatch(fetchGroupList()),
+  dispatchRefreshGroupList: (userId) => dispatch(fetchGroupList(userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

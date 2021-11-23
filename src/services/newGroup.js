@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { BASE_URL } from '../helpers/constantes';
 
-const API_URL = 'https://api-economapas.herokuapp.com/api/group.php';
+const API_URL = `${BASE_URL}/group.php`;
 
 const addGroupReq = async (groupInfo) => {
   const { data } = await axios({

@@ -20,7 +20,8 @@ class DialogConfirmation extends Component {
       dispatchDelete,
       group: { id },
     } = this.props;
-    dispatchDelete(id);
+    const { userId } = JSON.parse(localStorage.getItem('userInfo'));
+    dispatchDelete({ id, userId });
   };
   render() {
     const { showDelete, handleCloseEdit } = this.props;
@@ -51,7 +52,7 @@ class DialogConfirmation extends Component {
 }
 
 const mapDispatchToPros = (dispatch) => ({
-  dispatchDelete: (id) => dispatch(removeGroup(id)),
+  dispatchDelete: (values) => dispatch(removeGroup(values)),
 });
 
 export default connect(null, mapDispatchToPros)(DialogConfirmation);

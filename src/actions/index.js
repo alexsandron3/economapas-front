@@ -54,7 +54,7 @@ export const newLogin = (payload) => async (dispatch) => {
           userId,
         }),
       );
-      dispatch(userLogin(payload.username));
+      dispatch(userLogin({ username: payload.username, userId }));
     } else {
       toast.error(message, {
         pauseOnFocusLoss: false,
@@ -90,7 +90,7 @@ export const fetchGroupList = (payload) => async (dispatch) => {
   try {
     const {
       data: { success, message, grupos },
-    } = await fetchGroups();
+    } = await fetchGroups(payload);
 
     if (success === 1) {
       dispatch(refreshGroupList(grupos));
