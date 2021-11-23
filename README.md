@@ -1,5 +1,5 @@
 # economapas-API
-Você pode visualizar o código para o FRONT-END neste repositório: https://github.com/alexsandron3/economapas-API/
+Você pode visualizar o código para o BACK-END neste repositório: https://github.com/alexsandron3/economapas-API/
 
 Repositório para código referente ao FRONT do desafio para empresa ECONOMAPAS
 
