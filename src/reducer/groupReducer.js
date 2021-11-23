@@ -3,6 +3,7 @@ import {
   EDIT_GROUP,
   REFRESH_GROUP_LIST,
   DELETE_GROUP,
+  DEFAULT_STATE,
 } from '../actions/actions-types';
 
 const INITIAL_STATE = {
@@ -21,6 +22,8 @@ const groupReducer = (state = INITIAL_STATE, action) => {
       return { ...state, refresh: true };
     case REFRESH_GROUP_LIST:
       return { ...state, refresh: false, groupList: payload };
+    case DEFAULT_STATE:
+      return INITIAL_STATE;
     default:
       return state;
   }

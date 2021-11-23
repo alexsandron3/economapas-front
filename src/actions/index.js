@@ -10,6 +10,7 @@ import {
   USER_LOGIN,
   EDIT_GROUP,
   DELETE_GROUP,
+  DEFAULT_STATE,
 } from './actions-types';
 
 export const userLogin = (payload) => ({
@@ -36,6 +37,8 @@ export const refreshGroupList = (payload) => ({
   type: REFRESH_GROUP_LIST,
   payload,
 });
+
+export const resetState = () => ({ type: DEFAULT_STATE });
 
 export const newLogin = (payload) => async (dispatch) => {
   try {

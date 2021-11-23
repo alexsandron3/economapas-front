@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import { resetState } from '../../actions';
 
 class Appbar extends Component {
   constructor(props) {
@@ -16,7 +18,9 @@ class Appbar extends Component {
   }
 
   logout = () => {
+    const { dispatchResetState } = this.props;
     localStorage.removeItem('userInfo');
+    dispatchResetState();
     this.setState({ redirect: true });
   };
   render() {
@@ -48,4 +52,7 @@ class Appbar extends Component {
   }
 }
 
-export default Appbar;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchResetState: () => dispatch(resetState()),
+});
+export default connect(null, mapDispatchToProps)(Appbar);
